@@ -1,6 +1,7 @@
 package com.gana.weatherapp.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.gana.weatherapp.constants.Constants
 import com.gana.weatherapp.model.WeatherResponse
 import com.gana.weatherapp.repository.WeatherRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
@@ -19,11 +21,16 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     fun fetchWeather(name: String) {
         viewModelScope.launch {
+            delay(2000)
             try {
+                // This line makes the network request
                 val response = repository.getWeather(name, Constants.WEATHER_API_KEY)
                 if (response.isSuccessful) {
+                    Log.d("API", response.body().toString())
                     mutableApiData.postValue(response.body())
                 } else {
+                    // You might get a 429 error here
+                    Log.e("API_ERROR", "Error: ${response.code()} ${response.message()}")
                     mutableApiData.postValue(null)
                 }
             } catch (e: Exception) {
