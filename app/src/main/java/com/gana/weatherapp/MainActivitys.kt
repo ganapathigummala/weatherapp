@@ -4,44 +4,71 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
 import androidx.lifecycle.ViewModelProvider
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.gana.weatherapp.ui.theme.MyApplicationTheme
 import com.gana.weatherapp.viewmodel.MainActivityViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivitys : ComponentActivity() {
-
-    private lateinit var viewModel: MainActivityViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
+        installSplashScreen()
 
         setContent {
             MyApplicationTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    WeatherScreen(
-                        modifier = Modifier.padding(innerPadding),
-                        viewModel = viewModel
-                    )
-                }
+                    Count()
+
             }
         }
     }
 
     override fun onStart() {
         super.onStart()
-        viewModel.fetchWeather("Hyderabad")
+    }
+}
+@Composable
+fun Count(){
+    var count by remember { mutableStateOf(0) }
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Button(onClick = { count++ }){
+        Text("clicked $count times")}
+        Spacer(modifier = Modifier.height(16.dp))
+        Text("You have clicked $count times")
+    }
+}
+
+
+@Preview
+@Composable
+fun CountPreview() {
+    MyApplicationTheme {
+        Count()
     }
 }
 

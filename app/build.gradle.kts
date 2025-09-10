@@ -1,6 +1,10 @@
+
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.hilt.android)
+    kotlin("kapt")
 }
 
 android {
@@ -71,13 +75,22 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
 
+    implementation("androidx.compose.ui:ui:1.0.0")
+    implementation("androidx.compose.material:material:1.0.0")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
+    implementation("androidx.activity:activity-compose:1.3.0")
 
     // Retrofit + Gson Converter
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
-
+    implementation(libs.hilt)
+    kapt(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
+    implementation(libs.splash.screen)
     // Kotlin Extensions and Coroutines support for Room
+    implementation(libs.coroutine.android)
     implementation("androidx.room:room-ktx:2.6.1")
 
     // viewmodel lifecycle
