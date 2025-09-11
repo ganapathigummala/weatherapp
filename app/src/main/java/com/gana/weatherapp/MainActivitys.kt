@@ -68,6 +68,7 @@ fun Count(){
 @Composable
 fun CountPreview() {
     MyApplicationTheme {
+
         Count()
     }
 }

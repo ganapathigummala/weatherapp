@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="Theme.WeatherApp" parent="android:Theme.Material.Light.NoActionBar"/>
+    <style name="SplashScreenThema" parent="Theme.SplashScreen">
+        <item name="android:windowSplashScreenBackground">@color/white</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/app_logo</item>
+        <item name="android:windowSplashScreenAnimationDuration">1000</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/white</item>
+<!--        <item name="android:windowSplashScreenBrandingImage">@drawable/app_logo</item>-->
 
-    <style name="splashScreenThema" parent="Theme.SplashScreen">
-        <item name="android:windowBackground">@color/white</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_foreground</item>
         <item name="postSplashScreenTheme">@style/Theme.WeatherApp</item>
-
     </style>
+
 </resources>
